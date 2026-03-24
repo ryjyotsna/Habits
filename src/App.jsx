@@ -2,11 +2,11 @@
 import { useState, useMemo } from 'react';
 
 const STORAGE_KEY = 'habits-tracker-data';
-
+// Generate a unique ID for each habit
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
-
+// Convert a Date object into YYYY-MM-DD format
 function formatDateKey(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -17,7 +17,7 @@ function formatDateKey(date) {
 function getToday() {
   return formatDateKey(new Date());
 }
-
+// Load data from localStorage
 function loadData() {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -26,11 +26,11 @@ function loadData() {
     return { habits: [], completions: {} };
   }
 }
-
+// Save data to localStorage
 function saveData(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
-
+// Calculate current streak for a habit
 function calculateStreak(habitId, completions) {
   const today = new Date();
   let streak = 0;
@@ -55,7 +55,7 @@ function calculateStreak(habitId, completions) {
 
   return streak;
 }
-
+// Calculate best streak ever for a habit
 function calculateBestStreak(habitId, completions) {
   const dates = Object.keys(completions).sort();
   if (dates.length === 0) return 0;
@@ -86,7 +86,7 @@ function calculateBestStreak(habitId, completions) {
 
   return bestStreak;
 }
-
+// Predefined habit icons
 const HABIT_ICONS = [
   { id: 'exercise', icon: '🏃', label: 'Exercise' },
   { id: 'read', icon: '📚', label: 'Read' },
